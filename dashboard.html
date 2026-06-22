@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 上半年銷售月報 · 數據儀表板</title>
+<style>
+  :root{
+    --bg:#eef1f4; --paper:#ffffff; --ink:#1f2933; --muted:#6b7785;
+    --teal:#2f6f6a; --teal-lt:#5b938e; --amber:#c98a3c; --line:#e3e8ed;
+    --up:#2f8f5b; --down:#c0563f; --shadow:0 6px 24px rgba(31,41,51,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Helvetica Neue","Noto Sans TC",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+  h1,h2,h3,.serif{font-family:Georgia,"Noto Serif TC",serif}
+  .wrap{max-width:1080px;margin:0 auto;padding:28px 24px 60px}
+
+  .top{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:6px}
+  .top .eyebrow{font-size:12px;letter-spacing:3px;color:var(--teal);font-weight:700}
+  .top h1{font-size:30px;margin-top:6px}
+  .top .meta{font-size:13px;color:var(--muted);text-align:right}
+  .ai-note{background:#e7f0ef;border:1px solid #cfe0de;border-radius:10px;padding:10px 16px;font-size:13px;color:var(--teal);margin:14px 0 22px;display:flex;gap:8px;align-items:center}
+  .ai-note b{color:var(--ink)}
+
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px}
+  .kpi{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px;box-shadow:var(--shadow)}
+  .kpi .label{font-size:13px;color:var(--muted)}
+  .kpi .val{font-family:Georgia,serif;font-size:28px;margin:6px 0 4px}
+  .kpi .val small{font-size:14px;color:var(--muted)}
+  .delta{font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:3px}
+  .delta.up{color:var(--up)} .delta.down{color:var(--down)}
+
+  .row2{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;margin-bottom:16px}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:var(--shadow)}
+  .card h3{font-size:16px;margin-bottom:2px}
+  .card .sub{font-size:12px;color:var(--muted);margin-bottom:14px}
+  .row2b{display:grid;grid-template-columns:1fr 1.4fr;gap:16px}
+
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:10px 8px;text-align:left;font-size:13.5px;border-bottom:1px solid var(--line)}
+  th{color:var(--muted);font-weight:600;font-size:12px;letter-spacing:.5px}
+  td.num,th.num{text-align:right;font-family:Georgia,serif}
+  tr:last-child td{border-bottom:none}
+  .legend{display:flex;flex-direction:column;gap:8px;margin-top:6px}
+  .legend .li{display:flex;align-items:center;gap:8px;font-size:13px}
+  .legend .dot{width:11px;height:11px;border-radius:3px}
+  .legend .pct{margin-left:auto;font-family:Georgia,serif;color:var(--muted)}
+
+  footer{text-align:center;color:var(--muted);font-size:12px;margin-top:30px}
+  @media(max-width:820px){.kpis{grid-template-columns:1fr 1fr}.row2,.row2b{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div>
+      <div class="eyebrow">SALES REPORT · 2026 H1</div>
+      <h1>上半年銷售月報</h1>
+    </div>
+    <div class="meta">資料區間：2026/01–2026/06<br>資料來源：sales_2026H1.csv（3,182 筆）</div>
+  </div>
+  <div class="ai-note">📊 <span><b>這份儀表板是把一份 CSV 丟給 AI、請它整理＋畫圖做出來的</b> —— 同一份數據，10 分鐘變成能放進報告的圖。</span></div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="row2">
+    <div class="card">
+      <h3>各區域營收</h3><div class="sub">單位：萬元</div>
+      <svg id="bar" viewBox="0 0 600 260" style="width:100%;height:auto"></svg>
+    </div>
+    <div class="card">
+      <h3>品類營收占比</h3><div class="sub">本期累計</div>
+      <svg id="donut" viewBox="0 0 220 220" style="width:62%;display:block;margin:0 auto"></svg>
+      <div class="legend" id="legend"></div>
+    </div>
+  </div>
+
+  <div class="row2b">
+    <div class="card">
+      <h3>熱銷商品 Top 5</h3><div class="sub">依營收排序</div>
+      <table id="tbl"><thead><tr><th>商品</th><th class="num">銷量</th><th class="num">營收(萬)</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="card">
+      <h3>近 6 月營收趨勢</h3><div class="sub">單位：萬元</div>
+      <svg id="line" viewBox="0 0 600 240" style="width:100%;height:auto"></svg>
+    </div>
+  </div>
+
+  <footer>這是一個教學示範儀表板 · 數據為虛構</footer>
+</div>
+
+<script>
+// ===== 假想「CSV 整理後」的資料 =====
+const kpis=[
+  {label:'本月營收', val:'NT$ 1,284,500', d:'+12.4%', up:true},
+  {label:'訂單數', val:'3,182', d:'+8.1%', up:true},
+  {label:'客單價', val:'NT$ 404', d:'+4.0%', up:true},
+  {label:'退貨率', val:'2.3%', d:'−0.5%', up:false, good:true}
+];
+const regions=[['台北',386],['台中',274],['高雄',231],['桃園',198],['台南',156]];
+const months=[['1月',92],['2月',88],['3月',105],['4月',118],['5月',121],['6月',128]];
+const cats=[['飲料',38,'#2f6f6a'],['食品',27,'#5b938e'],['日用品',20,'#c98a3c'],['其他',15,'#a9b4bd']];
+const top=[['氣泡水 500ml',4210,121],['手沖咖啡包',2980,98],['有機燕麥',1870,76],['抽取衛生紙',5120,64],['堅果綜合包',1540,52]];
+
+const $=s=>document.querySelector(s);
+
+// KPI
+$('#kpis').innerHTML=kpis.map(k=>`<div class="kpi">
+  <div class="label">${k.label}</div>
+  <div class="val">${k.val}</div>
+  <span class="delta ${k.up?'up':'down'}">${k.up?'▲':'▼'} ${k.d.replace(/[+−-]/,'')}</span>
+</div>`).join('');
+
+// 長條圖
+(function(){
+  const W=600,H=260,pad=40,max=Math.max(...regions.map(r=>r[1])),bw=70,gap=(W-pad*2-bw*regions.length)/(regions.length-1);
+  let s=`<line x1="${pad}" y1="${H-30}" x2="${W-10}" y2="${H-30}" stroke="#e3e8ed"/>`;
+  regions.forEach((r,i)=>{ const h=(r[1]/max)*(H-70); const x=pad+i*(bw+gap), y=H-30-h;
+    s+=`<rect x="${x}" y="${y}" width="${bw}" height="${h}" rx="6" fill="#2f6f6a"/>`;
+    s+=`<text x="${x+bw/2}" y="${y-8}" text-anchor="middle" font-size="14" font-family="Georgia" fill="#1f2933">${r[1]}</text>`;
+    s+=`<text x="${x+bw/2}" y="${H-12}" text-anchor="middle" font-size="13" fill="#6b7785">${r[0]}</text>`; });
+  $('#bar').innerHTML=s;
+})();
+
+// 折線圖
+(function(){
+  const W=600,H=240,pad=40,max=Math.max(...months.map(m=>m[1]))*1.1,min=Math.min(...months.map(m=>m[1]))*.85;
+  const x=i=>pad+i*((W-pad*2)/(months.length-1)), y=v=>H-30-((v-min)/(max-min))*(H-60);
+  const pts=months.map((m,i)=>`${x(i)},${y(m[1])}`).join(' ');
+  let s=`<polygon points="${pad},${H-30} ${pts} ${W-pad},${H-30}" fill="#2f6f6a" opacity=".10"/>`;
+  s+=`<polyline points="${pts}" fill="none" stroke="#2f6f6a" stroke-width="3" stroke-linejoin="round"/>`;
+  months.forEach((m,i)=>{ s+=`<circle cx="${x(i)}" cy="${y(m[1])}" r="4.5" fill="#fff" stroke="#2f6f6a" stroke-width="2.5"/>`;
+    s+=`<text x="${x(i)}" y="${y(m[1])-12}" text-anchor="middle" font-size="12" font-family="Georgia" fill="#1f2933">${m[1]}</text>`;
+    s+=`<text x="${x(i)}" y="${H-10}" text-anchor="middle" font-size="12" fill="#6b7785">${m[0]}</text>`; });
+  $('#line').innerHTML=s;
+})();
+
+// 甜甜圈
+(function(){
+  const cx=110,cy=110,r=78,C=2*Math.PI*r; let off=0,s='';
+  cats.forEach(c=>{ const len=c[1]/100*C;
+    s+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${c[2]}" stroke-width="30"
+        stroke-dasharray="${len} ${C-len}" stroke-dashoffset="${-off}" transform="rotate(-90 ${cx} ${cy})"/>`;
+    off+=len; });
+  s+=`<text x="${cx}" y="${cy-4}" text-anchor="middle" font-size="13" fill="#6b7785">總營收</text>`;
+  s+=`<text x="${cx}" y="${cy+18}" text-anchor="middle" font-size="20" font-family="Georgia" fill="#1f2933">128 萬</text>`;
+  $('#donut').innerHTML=s;
+  $('#legend').innerHTML=cats.map(c=>`<div class="li"><span class="dot" style="background:${c[2]}"></span>${c[0]}<span class="pct">${c[1]}%</span></div>`).join('');
+})();
+
+// 表格
+$('#tbl tbody').innerHTML=top.map(t=>`<tr><td>${t[0]}</td><td class="num">${t[1].toLocaleString()}</td><td class="num">${t[2]}</td></tr>`).join('');
+</script>
+</body>
+</html>
