@@ -116,6 +116,13 @@
     <div class="step"><div class="n"></div><div class="t"><b>看結果、指出哪裡不對</b><br>「按鈕太小」「我要能刪除」「顏色換成暖一點」。像在跟設計師對話。</div></div>
     <div class="step"><div class="n"></div><div class="t"><b>重複到「夠用」為止</b><br>不是一次到位，是一次比一次接近。這叫迭代。</div></div>
   </div>
+  <p class="muted" style="margin-top:18px">把「迭代」想成捏黏土——先給一版粗胚，再一次次修，別妄想一次捏到完美：</p>
+  <div class="silhouette" style="margin-top:6px">
+    <div class="sil"><svg viewBox="0 0 100 70"><rect width="100" height="70" fill="#fbf8f2"/><path d="M30 48 q-6 -20 18 -22 q26 -2 22 18 q2 14 -20 14 q-22 2 -20 -10z" fill="#cdbfa9"/></svg><span>① 先丟一版</span></div>
+    <div class="sil"><svg viewBox="0 0 100 70"><rect width="100" height="70" fill="#fbf8f2"/><rect x="26" y="22" width="48" height="32" rx="12" fill="#c9b48f"/><rect x="34" y="44" width="20" height="6" rx="3" fill="#a9542f" opacity=".5"/></svg><span>② 按鈕太小</span></div>
+    <div class="sil"><svg viewBox="0 0 100 70"><rect width="100" height="70" fill="#fbf8f2"/><rect x="24" y="18" width="52" height="38" rx="9" fill="#c2683f" opacity=".5"/><rect x="32" y="40" width="36" height="9" rx="4" fill="#2e241d"/></svg><span>③ 加購物車</span></div>
+    <div class="sil"><svg viewBox="0 0 100 70"><rect width="100" height="70" fill="#fbf8f2"/><rect x="22" y="14" width="56" height="44" rx="8" fill="#fff" stroke="#6f8b80" stroke-width="2"/><rect x="30" y="22" width="40" height="6" rx="3" fill="#6f8b80"/><rect x="30" y="42" width="40" height="9" rx="4" fill="#c2683f"/></svg><span>④ 夠用了！</span></div>
+  </div>
 </section>
 
 <section>
@@ -150,12 +157,47 @@
 
   <div class="box no" style="border-left-color:#a9542f;margin-top:14px">
     <h4>⚠ 永遠提防「AI 幻覺」</h4>
+    <div style="display:flex;gap:10px;align-items:center;margin:4px 0 12px;font-size:13px">
+      <span style="color:var(--muted);white-space:nowrap">AI 的語氣自信</span>
+      <span style="flex:1;height:10px;background:#e2d8c8;border-radius:5px;overflow:hidden"><span style="display:block;width:100%;height:100%;background:var(--green)"></span></span>
+      <span style="color:#a9542f;font-weight:700;white-space:nowrap">≠ 內容正確</span>
+    </div>
     <p style="margin:0">AI 會用<b>非常有自信的語氣講錯話、甚至編造不存在的東西</b>（假數據、假法條、假函式、假引用）。它不是故意騙你，是它天生「通順優先於正確」。<b>越重要的事，越要自己查證</b>——數字、法律、醫療、報價，一律當它「可能在唬爛」來複查。把 AI 當聰明但會吹牛的實習生，別當權威。</p>
   </div>
 </section>
 
 <section>
-  <div class="kicker">進階技巧 · 你問的重點</div>
+  <div class="kicker">最高頻 · 你每天在做的事</div>
+  <h2>做報告：AI 幫你做掉一半</h2>
+  <p>你最常做的不是賣東西網站，是<b>報告</b>。報告最花時間的兩件事——把雜亂資料整理成重點、把數字變成圖表——Gemini 都能幫你做掉。</p>
+
+  <h3>先搞懂：哪件事該叫哪個 Gemini 工具做</h3>
+  <p class="muted">用錯工具是新手最大的卡點。記一句話：<b>要它「讀懂、回答」用 NotebookLM；要它「畫圖、算數」用 Gemini；要它「做能點的成品」用 AI Studio。</b></p>
+  <div class="res">
+    <div class="row"><div class="cat">讀文件 · 問答 · 摘要</div><div class="val"><b>NotebookLM</b> — 丟進一堆 PDF／文件／網頁，問它、要重點、做摘要。<b>注意：它不會畫圖表。</b></div></div>
+    <div class="row"><div class="cat">畫圖表 · 算數據</div><div class="val"><b>Gemini（Canvas／資料分析）</b> — 上傳 Excel/CSV，叫它畫長條、折線、圓餅，能對話調整。<b>做報告的圖就靠它。</b></div></div>
+    <div class="row"><div class="cat">寫 / 改文字</div><div class="val"><b>Gemini 對話</b> — 寫 email、改公文、會議記錄變條列、長文變摘要、翻譯潤稿。零門檻、當天就有感。</div></div>
+    <div class="row"><div class="cat">做能點的 DEMO / 網站</div><div class="val"><b>Google AI Studio（Build）</b> — 一句話生出能點、能用的小工具或網站（今天現場示範的那個）。</div></div>
+  </div>
+
+  <h3>把 Excel/CSV 變成報告圖表：照這 5 步</h3>
+  <div class="steps">
+    <div class="step"><div class="n"></div><div class="t"><b>清乾淨資料</b><br>一列一筆、第一列是欄位名（如「月份／銷售額」），刪掉合併格、空白列、小計列。AI 最常因為髒資料看錯。</div></div>
+    <div class="step"><div class="n"></div><div class="t"><b>丟給 Gemini、把需求講清楚</b><br>「用『月份』當 X 軸、『銷售額』當 Y 軸，畫<b>折線圖</b>，標題叫『2025 月銷售趨勢』。」自己指定欄位和圖型，別讓它猜。</div></div>
+    <div class="step"><div class="n"></div><div class="t"><b>核對數字</b><br>挑最高、最低、最後一筆，對照原始資料，確認沒被改數字、沒看錯欄位。</div></div>
+    <div class="step"><div class="n"></div><div class="t"><b>微調外觀</b><br>用講的：「數字標在點上」「換暖色」「軸加單位」。</div></div>
+    <div class="step"><div class="n"></div><div class="t"><b>匯出放進報告</b><br>要它輸出圖檔（PNG）或截圖，貼進投影片。</div></div>
+  </div>
+
+  <div class="box no" style="margin-top:6px"><h4>⚠ 用 AI 做數據圖最容易踩的雷</h4><ul>
+    <li><b>看錯欄位</b>：把年份當數值加總 → 步驟 2 明確指定 X／Y 欄。</li>
+    <li><b>捏造／竄改數字</b>：叫它「順便算成長率」時可能編 → 新算的數字一律回原始資料對一次。</li>
+    <li><b>圖表選錯</b>：口訣——<b>比大小用長條、看趨勢用折線、看占比用圓餅（≤5 塊）</b>。</li>
+  </ul></div>
+</section>
+
+<section>
+  <div class="kicker">進階 · 行有餘力再看</div>
   <h2>逆向工程：看到喜歡的成品，怎麼學起來用？</h2>
   <p>在網路上看到一個漂亮的網站 / 海報 / app，想做一個自己的——但<b>直接抄會侵權</b>。關鍵觀念先記住：</p>
 
@@ -207,7 +249,7 @@
 </section>
 
 <section>
-  <div class="kicker">資源 · 餵給 AI 的養分</div>
+  <div class="kicker">附錄 · 回家再查</div>
   <h2>哪些開源資源能讓 AI 直接拿來用</h2>
   <p>做成品需要圖、icon、字體、版型。下面這些都是<b>開源 / 免費可商用</b>的，你可以直接叫 AI 用，或自己抓來用，不會踩版權。</p>
 
@@ -255,6 +297,19 @@
   </table>
 </section>
 
+<section>
+  <div class="kicker">別卡關 · 動手前先知道</div>
+  <h2>開始前的 5 分鐘：帳號、上傳、存檔</h2>
+  <p>新手最常「打開就放棄」，都卡在這些沒人講的小門檻。先搞定：</p>
+  <div class="res">
+    <div class="row"><div class="cat">登入</div><div class="val">NotebookLM、Gemini、Google AI Studio 都用<b>同一個 Google 帳號</b>登入，免費。</div></div>
+    <div class="row"><div class="cat">免費額度</div><div class="val">今天教的都<b>免費</b>就能用，不用綁信用卡；額度很夠新手練。</div></div>
+    <div class="row"><div class="cat">檔案怎麼丟</div><div class="val">直接把 Excel／CSV／PDF <b>拖進對話框</b>或點上傳；資料太亂先在試算表清乾淨再丟。</div></div>
+    <div class="row"><div class="cat">做完怎麼存</div><div class="val">圖表叫它<b>輸出 PNG</b>；AI Studio 的成品可<b>分享連結</b>或存檔——別關掉沒存就不見。</div></div>
+    <div class="row"><div class="cat">公司資料</div><div class="val"><b>機密／客戶個資先別上傳</b>雲端 AI，先用假資料練，或問過公司規定。</div></div>
+  </div>
+</section>
+
 <div class="wrap">
 <div class="checklist">
   <h2>回家 Checklist：自己做一個成品</h2>
@@ -262,7 +317,7 @@
   <div class="item"><span>2.</span><div>用一句白話講清楚你要什麼（誰用、賣什麼、要有什麼功能）</div></div>
   <div class="item"><span>3.</span><div>看 AI 生出的第一版 → 指出哪裡不對 → 叫它改 → <b>重複</b></div></div>
   <div class="item"><span>4.</span><div>想參考喜歡的網站？用<b>黑白剪影法</b>：只借結構，內容全換成你的</div></div>
-  <div class="item"><span>5.</span><div>需要圖 / icon / 字體 → 從上面的<b>開源清單</b>拿，注意授權</div></div>
+  <div class="item"><span>5.</span><div>做報告？<b>NotebookLM</b> 抓重點、<b>Gemini</b> 把 Excel/CSV 畫成圖表（記得核對數字）</div></div>
   <div class="item"><span>6.</span><div>用 AI 時把自己當 <b>PM</b>：你定方向，它做事；它講的重要資訊<b>一律查證</b>（小心 AI 幻覺）</div></div>
   <div class="item"><span>7.</span><div>找一本<b>筆記本</b>（Google Doc / NotebookLM / Notion），把好用的 prompt、流程、踩過的雷記下來</div></div>
   <div class="item"><span>8.</span><div>記住：<b>你不是在學工具，是在練「把想法變成成品」的那套流程</b></div></div>
